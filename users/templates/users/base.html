@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователи</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; margin: 0; }
+        .sidebar { width: 250px; background: #2C3E50; color: white; height: 100vh; padding: 20px; }
+        .sidebar a { color: white; text-decoration: none; display: block; padding: 10px; }
+        .sidebar a:hover { background: #1A252F; }
+        .content { flex-grow: 1; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #f4f4f4; }
+        .btn { padding: 8px 15px; text-decoration: none; border: none; cursor: pointer; }
+        .btn-edit { background: #3498db; color: white; }
+        .btn-status { background: #2ecc71; color: white; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Меню</h2>
+        <a href="{% url 'user_list' %}">Пользователи</a>
+        <a href="#">Добавить пользователя</a>
+        <a href="#">Пригласить на собеседование</a>
+        <a href="#">Настройки</a>
+    </div>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

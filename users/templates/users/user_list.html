@@ -1,0 +1,47 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<h2>Список пользователей</h2>
+
+<form method="get">
+    <label>Фильтр по статусу:</label>
+    <select name="status">
+        <option value="">Все</option>
+        <option value="thinking">Думает</option>
+        <option value="invited">Приглашен</option>
+    </select>
+
+    <label>Фильтр по направлению:</label>
+    <select name="direction">
+        <option value="">Все</option>
+        <option value="backend_python">Backend (Python)</option>
+        <option value="backend_js">Backend (JS)</option>
+        <option value="frontend">Frontend</option>
+        <option value="design">UI/UX Design</option>
+    </select>
+
+    <button type="submit">Применить</button>
+</form>
+
+<table>
+    <tr>
+        <th>Имя</th>
+        <th>Телефон</th>
+        <th>Направление</th>
+        <th>Статус</th>
+        <th>Действие</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.name }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.get_direction_display }}</td>
+        <td>{{ user.get_status_display }}</td>
+        <td>
+            <a href="{% url 'edit_user' user.id %}" class="btn btn-edit">Редактировать</a>
+            <a href="{% url 'change_status' user.id 'invited' %}" class="btn btn-status">Пригласить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
