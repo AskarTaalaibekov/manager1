@@ -39,7 +39,10 @@
         <td>{{ user.get_status_display }}</td>
         <td>
             <a href="{% url 'edit_user' user.id %}" class="btn btn-edit">Редактировать</a>
-            <a href="{% url 'change_status' user.id 'invited' %}" class="btn btn-status">Пригласить</a>
+            <form method="post" action="{% url 'delete_user' user.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-delete">Удалить</button>
+            </form>
         </td>
     </tr>
     {% endfor %}

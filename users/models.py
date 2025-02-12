@@ -30,3 +30,12 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.name
+
+class Interview(models.Model):
+    user = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
+    mentor = models.CharField(max_length=100)
+    date_time = models.DateTimeField()
+    whatsapp_number = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"Собеседование с {self.user.name} ({self.date_time})"
