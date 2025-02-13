@@ -1,29 +1,31 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-<h2>Список пользователей</h2>
+<h2>📋 Список пользователей</h2>
 
+<!-- 🔎 Фильтрлер -->
 <form method="get" class="filter-form">
-    <label>Фильтр по статусу:</label>
+    <label>📌 Фильтр по статусу:</label>
     <select name="status">
         <option value="">Все</option>
-        <option value="thinking">Думает</option>
-        <option value="invited">Приглашен</option>
+        <option value="thinking" {% if request.GET.status == "thinking" %}selected{% endif %}>Думает</option>
+        <option value="invited" {% if request.GET.status == "invited" %}selected{% endif %}>Приглашен</option>
     </select>
 
-    <label>Фильтр по направлению:</label>
+    <label>🎯 Фильтр по направлению:</label>
     <select name="direction">
         <option value="">Все</option>
-        <option value="backend_python">Backend (Python)</option>
-        <option value="backend_js">Backend (JS)</option>
-        <option value="frontend">Frontend</option>
-        <option value="design">UI/UX Design</option>
+        <option value="backend_python" {% if request.GET.direction == "backend_python" %}selected{% endif %}>Backend (Python)</option>
+        <option value="backend_js" {% if request.GET.direction == "backend_js" %}selected{% endif %}>Backend (JS)</option>
+        <option value="frontend" {% if request.GET.direction == "frontend" %}selected{% endif %}>Frontend</option>
+        <option value="design" {% if request.GET.direction == "design" %}selected{% endif %}>UI/UX Design</option>
     </select>
 
-    <button type="submit" class="btn btn-filter">Применить</button>
+    <button type="submit" class="btn-filter">🔍 Применить</button>
 </form>
 
-<table>
+<!-- 📌 Таблица -->
+<table class="user-table">
     <tr>
         <th>Имя</th>
         <th>Телефон</th>
@@ -38,27 +40,36 @@
         <td>{{ user.get_direction_display }}</td>
         <td>{{ user.get_status_display }}</td>
         <td>
-            <a href="{% url 'edit_user' user.id %}" class="btn btn-edit">Редактировать</a>
+            <a href="{% url 'edit_user' user.id %}" class="btn btn-edit">✏️ Редактировать</a>
             <form method="post" action="{% url 'delete_user' user.id %}" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-delete">Удалить</button>
+                <button type="submit" class="btn btn-delete">🗑 Удалить</button>
             </form>
         </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5" style="text-align: center;">❌ Ничего не найдено</td>
     </tr>
     {% endfor %}
 </table>
 
+<!-- 📌 CSS -->
 <style>
-    /* Форма фильтра */
+    /* 🔎 Фильтрлер */
     .filter-form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         margin-bottom: 15px;
+        flex-wrap: wrap;
     }
 
     .filter-form select, .filter-form button {
         padding: 8px;
         font-size: 14px;
         border-radius: 5px;
-        margin-right: 10px;
+        border: 1px solid #ddd;
     }
 
     .btn-filter {
@@ -67,25 +78,26 @@
         border: none;
         cursor: pointer;
         transition: 0.3s;
+        padding: 8px 12px;
     }
 
     .btn-filter:hover {
         background: #27ae60;
     }
 
-    /* Таблица */
+    /* 📌 Таблица */
     table {
         width: 100%;
         border-collapse: collapse;
-        background: white;
+        background: var(--table-bg, white);
         margin-top: 10px;
     }
 
     th, td {
         border: 1px solid #ddd;
-        padding: 10px;
+        padding: 12px;
         text-align: left;
-        color: #000; /* Тексттин түсүн кара кылуу */
+        color: var(--table-text, #000);
     }
 
     th {
@@ -94,16 +106,16 @@
     }
 
     tr:nth-child(even) {
-        background: #f9f9f9;
+        background: var(--row-bg, #f9f9f9);
     }
 
     tr:hover {
-        background: #e6e6e6;
+        background: var(--row-hover, #e6e6e6);
     }
 
-    /* Кнопкалар */
+    /* 📌 Кнопкалар */
     .btn {
-        padding: 8px 15px;
+        padding: 8px 12px;
         border: none;
         text-decoration: none;
         font-size: 14px;
@@ -128,6 +140,14 @@
 
     .btn-delete:hover {
         background: #c0392b;
+    }
+
+    /* 🌑 Темный режим */
+    .dark-mode {
+        --table-bg: #2C3E50;
+        --table-text: white;
+        --row-bg: #34495E;
+        --row-hover: #3B4C5E;
     }
 </style>
 

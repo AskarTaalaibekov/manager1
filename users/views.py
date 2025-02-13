@@ -7,19 +7,33 @@ from datetime import datetime
 from django.urls import reverse
 
 def user_list(request):
-    """'Думает' статусундагы колдонуучулар гана көрсөтүлөт."""
+    """Издөө жана фильтрлер"""
     query = request.GET.get('q')
+    status_filter = request.GET.get('status')
     direction_filter = request.GET.get('direction')
 
-    users = UserProfile.objects.filter(status="thinking")
+    users = UserProfile.objects.all()  # Бардык колдонуучуларды алуу
 
     if query:
         users = users.filter(name__icontains=query) | users.filter(phone__icontains=query)
+
+    if status_filter:
+        users = users.filter(status=status_filter)
 
     if direction_filter:
         users = users.filter(direction=direction_filter)
 
     return render(request, 'users/user_list.html', {'users': users})
+# def user_list(request):
+#     """Бардык колдонуучуларды издөө."""
+#     query = request.GET.get('q')
+#
+#     users = UserProfile.objects.all()  # Бардык колдонуучуларды алуу
+#
+#     if query:
+#         users = users.filter(name__icontains=query) | users.filter(phone__icontains=query)
+#
+#     return render(request, 'users/user_list.html', {'users': users})
 
 
 def interview_list(request):
