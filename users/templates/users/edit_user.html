@@ -1,0 +1,106 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<div class="edit-container">
+    <h2>Редактировать пользователя</h2>
+
+    <div class="edit-box">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_name">Имя:</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label for="id_phone">Телефон:</label>
+                {{ form.phone }}
+            </div>
+            <div class="form-group">
+                <label for="id_status">Статус:</label>
+                {{ form.status }}
+            </div>
+            <div class="form-group">
+                <label for="id_direction">Направление:</label>
+                {{ form.direction }}
+            </div>
+
+            <button type="submit" class="btn btn-save">Сохранить</button>
+        </form>
+
+        <a href="{% url 'user_list' %}" class="btn btn-back">Назад</a>
+    </div>
+</div>
+
+<style>
+    /* Контейнер */
+    .edit-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50px;
+    }
+
+    /* Кутуча */
+    .edit-box {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        text-align: center;
+    }
+
+    /* Форманын элементтери */
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    /* Кнопкалар */
+    .btn-save {
+        background: #2ecc71;
+        color: white;
+        padding: 12px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 100%;
+    }
+
+    .btn-save:hover {
+        background: #27ae60;
+    }
+
+    .btn-back {
+        display: block;
+        margin-top: 15px;
+        padding: 12px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .btn-back:hover {
+        background: #217dbb;
+    }
+</style>
+{% endblock %}

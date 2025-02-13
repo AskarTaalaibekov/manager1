@@ -16,6 +16,15 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# STATIC файлы үчүн туура жолдорду көрсөтүү
+STATIC_URL = '/static/'
+
+# STATICFILES_DIRS бул жерге долбоордун ичиндеги static папкаларды кошобуз
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "user", "users", "static"),
+]
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 

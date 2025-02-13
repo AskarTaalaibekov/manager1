@@ -1,0 +1,118 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<h2>Чакырылган колдонуучулар</h2>
+
+<div class="table-container">
+    <table>
+        <tr>
+            <th>Имя</th>
+            <th>Телефон</th>
+            <th>Направление</th>
+            <th>Статус</th>
+            <th>Чакырылган убакыт</th>
+        </tr>
+        {% for interview in users %}
+        <tr>
+            <td class="user-text">{{ interview.user.name }}</td>
+            <td class="user-text">{{ interview.user.phone }}</td>
+            <td class="user-text">{{ interview.user.get_direction_display }}</td>
+            <td class="user-text">{{ interview.user.get_status_display }}</td>
+            <td class="user-text">
+                {% if request.COOKIES.date_format == "dd-mm-yyyy" %}
+                    {{ interview.date_time|date:"d-m-Y H:i" }}
+                {% elif request.COOKIES.date_format == "yyyy-mm-dd" %}
+                    {{ interview.date_time|date:"Y-m-d H:i" }}
+                {% elif request.COOKIES.date_format == "mm/dd/yyyy" %}
+                    {{ interview.date_time|date:"m/d/Y H:i" }}
+                {% else %}
+                    {{ interview.date_time|date:"d-m-Y H:i" }}
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="empty-data">Маалымат табылган жок</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<a href="{% url 'user_list' %}" class="btn btn-back">Назад</a>
+
+<style>
+    /* ✅ Таблицанын контейнерин стилдөө */
+    .table-container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ✅ Таблица */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+        color: black; /* Негизги текст кара болот */
+    }
+
+    th {
+        background: #2C3E50;
+        color: white;
+        text-transform: uppercase;
+    }
+
+    tr:hover {
+        background: #f2f2f2;
+    }
+
+    /* ✅ Темный режим: Фон ак, текст кара */
+    .dark-mode .table-container {
+        background: #F8F9FA; /* Ачык фон */
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .dark-mode td {
+        color: black !important; /* Кара текст */
+    }
+
+    .dark-mode th {
+        background: #1A252F;
+        color: white;
+    }
+
+    /* ✅ Маалымат жок болсо */
+    .empty-data {
+        text-align: center;
+        font-weight: bold;
+        color: red;
+    }
+
+    /* ✅ Артка кайтуу кнопкасы */
+    .btn-back {
+        display: block;
+        width: 200px;
+        text-align: center;
+        padding: 10px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        margin-top: 20px;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    .btn-back:hover {
+        background: #217dbb;
+    }
+</style>
+
+{% endblock %}

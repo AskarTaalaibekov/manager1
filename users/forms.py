@@ -1,10 +1,12 @@
 from django import forms
 from .models import UserProfile,Interview
 
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['name', 'phone', 'status', 'direction', 'contacted']
+        fields = ['name', 'phone','status', 'direction',]
+
 
 
 MENTOR_CHOICES = [
